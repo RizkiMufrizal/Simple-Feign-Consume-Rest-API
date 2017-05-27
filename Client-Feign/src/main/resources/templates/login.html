@@ -1,14 +1,62 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Login Form</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Belajar Feign</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/signin.css}"/>
 </head>
 <body>
-<form th:object="${user}" th:action="@{/login}" method="post">
-    <input th:field="*{username}" type="text" class="form-control" placeholder="Masukkan Username"/>
-    <input th:field="*{password}" type="password" class="form-control" placeholder="Masukkan Password"/>
-    <button type="submit">Login</button>
-</form>
+
+<div class="container">
+
+    <form class="form-signin" th:object="${user}" th:action="@{/login}" method="post">
+
+        <div th:if="${param.error}" id="error" style="text-align: center" class="alert alert-danger">
+            <a href="" class="close" data-dismiss="alert">
+                &times;
+            </a>
+            <strong>Error</strong><p></p> Username Dan Password Salah
+        </div>
+
+        <div th:if="${param.logout}" id="logout" style="text-align: center" class="alert alert-success">
+            <a href="" class="close" data-dismiss="alert">
+                &times;
+            </a>
+            <strong>Info</strong><p></p> Anda Berhasil LogOut
+        </div>
+
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="username" class="sr-only">Username</label>
+        <input th:field="*{username}" type="text" id="username" class="form-control" placeholder="Username"
+               required="true"/>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input th:field="*{password}" type="password" id="inputPassword" class="form-control" placeholder="Password"
+               required="true"/>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me" /> Remember me
+            </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}" type="application/javascript"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" type="application/javascript"></script>
+<script type="application/javascript">
+    $.noConflict();
+    jQuery(document).ready(function(){
+        setTimeout(function(){
+            jQuery('#error').fadeOut('slow');
+        }, 3000);
+        setTimeout(function(){
+            jQuery('#logout').fadeOut('slow');
+        }, 3000);
+    });
+</script>
 </body>
 </html>
