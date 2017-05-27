@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Belajar Feign</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/navbar-fixed-top.css}"/>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Belajar Feign</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/}">Home</a></li>
+                <li class="active"><a th:href="@{/barang}">Barang</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a th:href="@{/logout}" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false"><span th:text="${username}"></span> <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a th:href="@{/logout}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container">
+
+    <table id="laporan" class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">No</th>
+                <th class="text-center">ID Barang</th>
+                <th class="text-center">Nama Barang</th>
+                <th class="text-center">Jumlah Barang</th>
+                <th class="text-center">Jenis Barang</th>
+                <th class="text-center">Harga Barang</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="l,x : ${barangs}">
+                <td class="text-center" th:text="${x.index + 1}"></td>
+                <td th:text="${l.idBarang}"></td>
+                <td th:text="${l.namaBarang}"></td>
+                <td th:text="${l.jumlahBarang}"></td>
+                <td th:text="${l.jenisBarang}"></td>
+                <td th:text="${l.hargaBarang}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}" type="application/javascript"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" type="application/javascript"></script>
+</body>
+</html>
