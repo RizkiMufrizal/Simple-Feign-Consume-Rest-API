@@ -2,7 +2,6 @@ package org.rizki.mufrizal.client.client.feign.helpers
 
 import feign.Feign
 import feign.auth.BasicAuthRequestInterceptor
-import feign.codec.ErrorDecoder
 import feign.jackson.JacksonDecoder
 import feign.jackson.JacksonEncoder
 
