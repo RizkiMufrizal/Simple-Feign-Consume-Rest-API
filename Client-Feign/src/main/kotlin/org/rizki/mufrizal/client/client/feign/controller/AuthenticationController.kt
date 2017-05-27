@@ -1,5 +1,6 @@
 package org.rizki.mufrizal.client.client.feign.controller
 
+import feign.FeignException
 import org.rizki.mufrizal.client.client.feign.domain.User
 import org.rizki.mufrizal.client.client.feign.helpers.FeignHelper
 import org.rizki.mufrizal.client.client.feign.restclient.LoginServiceClient
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpSession
  * Created by rizkimufrizal on 5/25/17.
  */
 @Controller
-class LoginController {
+class AuthenticationController {
 
     @GetMapping(value = "/login")
     fun getLoginForm(model: Model): String {
@@ -25,11 +26,27 @@ class LoginController {
     @PostMapping(value = "/login")
     fun postLoginForm(@ModelAttribute("user") user: User, httpSession: HttpSession): String {
         val loginServiceClient: LoginServiceClient = FeignHelper.feignBuilder(LoginServiceClient::class.java)
-        if (loginServiceClient.postLogin(User(username = user.username, password = user.password))["Success"] as Boolean) {
-            httpSession.setAttribute("UserSession", true)
-            return "redirect:/"
-        } else {
-            return "login"
+        try {
+            val login = loginServiceClient.postLogin(User(username = user.username, password = user.password))
+            if (login["Success"] as Boolean) {
+                httpSession.setAttribute("UserSession", true)
+                httpSession.setAttribute("username", user.username)
+                httpSession.setAttribute("password", user.password)
+                return "redirect:/"
+            } else {
+                return "redirect:/login?error"
+            }
+        } catch (e: FeignException) {
+            if (e.status() == 401) {
+                return "redirect:/login?error"
+            }
         }
+        return "redirect:/login"
+    }
+
+    @GetMapping(value = "/logout")
+    fun logout(httpSession: HttpSession): String {
+        httpSession.invalidate()
+        return "redirect:/login?logout"
     }
 }
