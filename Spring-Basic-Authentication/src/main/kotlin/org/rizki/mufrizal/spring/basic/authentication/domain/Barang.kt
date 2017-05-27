@@ -7,7 +7,7 @@ import java.math.BigDecimal
  */
 
 enum class JenisBarang {
-    cair, pada, gas
+    cair, padat, gas
 }
 
 data class Barang(val idBarang: String? = null, val namaBarang: String? = null, val jumlahBarang: Int? = null, val jenisBarang: JenisBarang? = null, val hargaBarang: BigDecimal? = null)
