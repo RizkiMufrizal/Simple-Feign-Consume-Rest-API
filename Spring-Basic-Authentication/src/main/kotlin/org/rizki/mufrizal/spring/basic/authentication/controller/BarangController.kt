@@ -12,15 +12,11 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping(value = "/api")
 class BarangController {
 
-    var barangs = ArrayList<Barang>()
+    companion object {
+        @JvmStatic var barangs = ArrayList<Barang>()
+    }
 
     @GetMapping(value = "/barangs")
     fun getBarangs(): ResponseEntity<*> = ResponseEntity(barangs, HttpStatus.OK)
-
-    @PostMapping(value = "/barangs")
-    fun postBarang(@RequestBody barang: Barang): ResponseEntity<*> {
-        this.barangs.add(barang)
-        return ResponseEntity(barang, HttpStatus.CREATED)
-    }
 
 }
